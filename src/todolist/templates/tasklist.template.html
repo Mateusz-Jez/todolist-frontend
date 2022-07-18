@@ -1,12 +1,23 @@
-<div>Home page</div>
-<ul>
-    <li ng-repeat="task in tasks">
-        {{ task.title }}
-        <br>
-        {{ task.description }}
-        <br>
-        {{ task.deadline }}
-        <br>
-        {{ task.taskCategory }}
-    </li>
-</ul>
+<div class="container col-sm-5">
+    <div class="row justify-content-center">
+        <div ng-if="tasks.length === 0" class="alert alert-secondary text-center mt-4 display-6" role="alert">
+            No items to display.<br> Please press <a href="index.html#!/add" class="alert-link">ADD</a> to add new items.
+        </div>
+        <div class="list-group" style="display: table;">
+            <a class="card list-group-item list-group-item-action" style="display: table-row;" href="#" ng-repeat="task in tasks">
+                <div class="card-body text-center">
+                    <div class="card-header h4">
+                        <div ng-if="task.taskCategory === 'PENDING'" class="text-warning">{{ task.taskCategory }}</div>
+                        <div ng-if="task.taskCategory === 'COMPLETED'" class="text-success">{{ task.taskCategory }}</div>
+                        <div ng-if="task.taskCategory === 'OVERDUE'" class="text-danger">{{ task.taskCategory }}</div>
+                    </div>
+                    <div class="display-4 mb-3">{{ task.title }}</div>
+                    <div class="display-6 card-subtitle mb-3 text-muted">{{ task.description }}</div>
+                    <div class="card-footer text-muted h5">
+                        DEADLINE: <mark>{{ task.deadline | date : 'H' + ':mm,' + ' d' + ' MMM' + ' yyyy'  }}</mark>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

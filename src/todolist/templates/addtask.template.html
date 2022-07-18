@@ -1,18 +1,20 @@
-<div class="container">
+<div class="container col-sm-5">
     <br>
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Title">
-    </div>
-    <div class="input-group mb-3">
-        <textarea class="form-control" placeholder="Description"></textarea>
-    </div>
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Deadline</span>
+    <form ng-submit="addTask()">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" ng-model="title" ng-minlength="1" required placeholder="Title">
         </div>
-        <input type="datetime-local" class="form-control">
-    </div>
-
-    <a class="btn btn-danger" role="button" href back-button>CANCEL</a>
-    <button type="button" class="btn btn-info">ADD</button>
+        <div class="input-group mb-3">
+            <textarea class="form-control" ng-model="description" ng-minlength="1" required placeholder="Description"></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Deadline</span>
+            </div>
+            <input type="datetime-local" ng-model="deadline" required class="form-control">
+        </div>
+<!--        <span ng-show="!deadline.length">Please enter something!</span>-->
+        <a class="btn btn-danger" role="button" href back-button>CANCEL</a>
+        <button type="submit" class="btn btn-info">ADD</button>
+    </form>
 </div>

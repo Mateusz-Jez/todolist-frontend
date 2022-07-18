@@ -1,13 +1,13 @@
-(function () {
-'use strict';
+angular.module('ToDoListApp.controller', [])
+.controller('ToDoListController', function($scope, $routeParams, todolistAPIservice) {
+    $scope.tasks = [];
 
-angular.module('ToDoListApp')
-.controller('ToDoListController', ToDoListController);
-
-ToDoListController.$inject = ['tasks'];
-function ToDoListController(tasks) {
-    var mainList = this;
-    mainList.tasks = tasks;
-}
-
-})();
+    todolistAPIservice.getTasks($routeParams.category).then(function (data) {
+       $scope.tasks = data;
+    });
+}).
+controller('AddTaskController', function($scope, todolistAPIservice) {
+    $scope.addTask = function(){
+        todolistAPIservice.addTask($scope.title, $scope.description, $scope.deadline);
+    }
+});

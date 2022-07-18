@@ -1,7 +1,6 @@
-(function () {
 'use strict';
 
-angular.module('ToDoListApp', ['ui.router'])
+angular.module('ToDoListApp.directive', [])
 .directive('backButton', function(){
     return {
       restrict: 'A',
@@ -16,5 +15,3 @@ angular.module('ToDoListApp', ['ui.router'])
       }
     }
 });
-
-})();

@@ -1,27 +1,30 @@
-(function() {
-'use strict';
+angular.module('ToDoListApp.service', [])
+.factory('todolistAPIservice', function($http) {
+    var todolistAPI = {};
 
-angular.module('ToDoListApp')
-.service('ToDoListService', ToDoListService);
+    todolistAPI.getTasks = function (category) {
 
-ToDoListService.$inject = ['$q']
-function ToDoListService($q) {
-    var service = this;
+        return $http({
+            method: 'GET',
+            url: 'http://localhost:8080/task/' + category
+        }).then(function (response){
+            return response.data;
+        });
+    }
 
-    var tasks = [];
+    todolistAPI.addTask = function (title, description, deadline) {
 
-    tasks.push({
-        name: "Sugar",
-        description: "Sugar used for baking delicious umm... baked goods."
-      });
-      tasks.push({
-        name: "flour",
-        description: "High quality wheat flour. Mix it with water, sugar, 2 raw eggs."
-      });
-      tasks.push({
-        name: "Chocolate Chips",
-        description: "Put these in the dough. No reason, really. Gotta store them somewhere!"
-      });
-}
+        return $http({
+            method: 'POST',
+            url: "http://localhost:8080/task",
+            data: {
+                "title": title,
+                "description": description,
+                "deadline": deadline,
+                "taskCategory": "PENDING"
+            }
+        });
+    }
 
-})();
+    return todolistAPI;
+});
