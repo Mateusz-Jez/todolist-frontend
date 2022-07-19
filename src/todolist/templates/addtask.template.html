@@ -1,6 +1,6 @@
 <div class="container col-sm-5">
     <br>
-    <form ng-submit="addTask()">
+    <form ng-submit="checkDate()">
         <div class="input-group mb-3">
             <input type="text" class="form-control" ng-model="title" ng-minlength="1" required placeholder="Title">
         </div>
@@ -13,8 +13,11 @@
             </div>
             <input type="datetime-local" ng-model="deadline" required class="form-control">
         </div>
-<!--        <span ng-show="!deadline.length">Please enter something!</span>-->
-        <a class="btn btn-danger" role="button" href back-button>CANCEL</a>
-        <button type="submit" class="btn btn-info">ADD</button>
+
+        <div>
+            <a class="btn btn-danger" role="button" href back-button>CANCEL</a>
+            <button type="submit" class="btn btn-info">ADD</button>
+        </div>
+        <span class="text-danger display-6 mt-3" ng-if="error">{{ error }}</span>
     </form>
 </div>
