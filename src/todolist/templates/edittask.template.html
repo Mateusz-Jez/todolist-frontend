@@ -1,0 +1,32 @@
+<div>
+  <div class="modal-header">
+    <h3 class="modal-title">Edit task</h3>
+  </div>
+  <h4 class="text-center mt-4" ng-class="{ 'text-warning' : editCategory === 'PENDING',
+                          'text-success' : editCategory === 'COMPLETED',
+                           'text-danger' : editCategory === 'OVERDUE'}">{{ editCategory }}</h4>
+  <form ng-submit="checkDate()">
+    <div class="modal-body">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" ng-model="editTitle" ng-minlength="1" required >
+      </div>
+      <div class="input-group mb-3">
+        <textarea class="form-control" ng-model="editDescription" ng-minlength="1" required placeholder="Description"></textarea>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Deadline</span>
+        </div>
+        <input type="datetime-local" ng-model="editDeadline" required class="form-control">
+      </div>
+
+    </div>
+
+    <div class="modal-footer">
+      <a class="btn btn-danger" role="button" ng-click="cancel()">CANCEL</a>
+      <button type="button" class="btn btn-success" ng-class="{ 'disabled' : editCategory === 'COMPLETED' }" ng-click="complete()">COMPLETE</button>
+      <button type="submit" class="btn btn-info" ng-click="confirm()">CONFIRM</button>
+    </div>
+    <span class="text-danger display-6 mt-3" ng-if="error">{{ error }}</span>
+  </form>
+</div>

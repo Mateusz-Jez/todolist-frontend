@@ -43,14 +43,30 @@ angular.module('ToDoListApp.service', [])
     }
 
     todolistAPI.markTasksAsCompleted = function (tasks) {
-            return $http({
-                        method: 'POST',
-                        url: "http://localhost:8080/task/complete",
-                        data : tasks
-                    }).then(function (){
-                        window.location.reload();
-                    });
-        }
+        return $http({
+                    method: 'POST',
+                    url: "http://localhost:8080/task/complete",
+                    data : tasks
+                }).then(function (){
+                    window.location.reload();
+                });
+    }
+
+    todolistAPI.editTask = function (id, title, description, category, deadline) {
+        return $http({
+                            method: 'PUT',
+                            url: "http://localhost:8080/task/" + id,
+                            data: {
+                                "id" : id,
+                                "title": title,
+                                "description": description,
+                                "deadline": deadline,
+                                "taskCategory": category
+                            }
+                        }).then(function (){
+                            window.location.reload();
+                        });
+    }
 
     return todolistAPI;
 });

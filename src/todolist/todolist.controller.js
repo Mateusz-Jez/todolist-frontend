@@ -1,5 +1,5 @@
 angular.module('ToDoListApp.controller', [])
-.controller('ToDoListController', function($scope, $routeParams, todolistAPIservice) {
+.controller('ToDoListController', function($scope, $routeParams, todolistAPIservice, $uibModal, $log) {
     $scope.tasks = [];
     $scope.selectedTasksId = [];
     $scope.notCompletedSelected = false;
@@ -38,9 +38,34 @@ angular.module('ToDoListApp.controller', [])
         todolistAPIservice.markTasksAsCompleted($scope.selectedTasksId);
     }
 
-    $scope.editTask = function () {
-
+    $scope.findTaskById = function (id) {
+            for(var i=0; i<$scope.tasks.length; i++){
+                if($scope.tasks[i].id == id) return $scope.tasks[i];
+            }
     }
+
+    $scope.editTaskData;
+
+    $scope.editTask = function(id) {
+        $scope.editTaskData = $scope.findTaskById(id);
+        var modalInstance = $uibModal.open({
+          animation: true,
+          templateUrl: 'src/todolist/templates/edittask.template.html',
+          controller: 'ModalInstanceCtrl',
+          size: 'lg',
+          resolve: {
+            editTaskData: function() {
+              return $scope.editTaskData;
+            }
+          }
+        });
+
+        modalInstance.result.then(function(selectedItem) {
+              $scope.selected = selectedItem;
+            }, function() {
+
+            });
+    };
 })
 .controller('AddTaskController', function($scope, todolistAPIservice, $window) {
     $scope.checkDate = function () {
@@ -56,4 +81,22 @@ angular.module('ToDoListApp.controller', [])
     $scope.addTask = function (){
         todolistAPIservice.addTask($scope.title, $scope.description, $scope.deadline, $window);
     }
-});
+})
+.controller('ModalInstanceCtrl', function($scope, $uibModalInstance, editTaskData, todolistAPIservice) {
+  $scope.editTitle = editTaskData.title;
+  $scope.editDescription = editTaskData.description;
+  $scope.editCategory = editTaskData.taskCategory;
+  $scope.editDeadline = new Date(editTaskData.deadline);
+
+  $scope.confirm = function() {
+    todolistAPIservice.editTask(editTaskData.id, $scope.editTitle, $scope.editDescription, $scope.editCategory, $scope.editDeadline);
+  };
+
+  $scope.complete = function () {
+    $scope.editCategory = 'COMPLETED';
+  }
+
+  $scope.cancel = function() {
+    $uibModalInstance.dismiss('cancel');
+  };
+});;

@@ -1,12 +1,12 @@
-<div class="container col-sm-5">
+<div class="container">
     <div class="row justify-content-center">
         <div ng-if="tasks.length === 0" class="alert alert-secondary text-center mt-4 display-6" role="alert">
             No items to display.<br> Please press <a href="index.html#!/add" class="alert-link">ADD</a> to add new items.
         </div>
-        <div class="mt-2" ng-if="tasks.length > 0">
+        <div class="mt-2 mb-1" ng-if="tasks.length > 0">
             <button class="btn btn-danger" role="button"  ng-class="{ 'disabled' : selectedTasksId.length === 0 }" ng-click="deleteTasks()">DELETE</button>
             <button class="btn btn-success" role="button" ng-class="{ 'disabled' : !notCompletedSelected }" ng-click="markTasksAsCompleted()">COMPLETE</button>
-            <button class="btn btn-warning" role="button" ng-class="{ 'disabled' : selectedTasksId.length !== 1 }" ng-click="editTask()">EDIT</button>
+            <button class="btn btn-warning" role="button" ng-class="{ 'disabled' : selectedTasksId.length !== 1 }" ng-click="editTask(selectedTasksId[0])">EDIT</button>
         </div>
         <div class="list-group" style="display: table;">
             <div class="card list-group-item list-group-item-action" style="display: table-row;" ng-repeat="task in tasks">
