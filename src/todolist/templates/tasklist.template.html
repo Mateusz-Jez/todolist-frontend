@@ -12,8 +12,8 @@
             <div class="card list-group-item list-group-item-action" style="display: table-row;" ng-repeat="task in tasks">
                 <div class="card-body text-center" ng-click="selectTask(task.id)">
                     <div class="card-header h4" ng-class="{ 'bg-info' : selectedTasksId.indexOf(task.id) !== -1}">
-                        <div ng-class="{ 'text-warning' : task.taskCategory === 'PENDING',
-                          'text-success' : task.taskCategory === 'COMPLETED', 'text-danger' : task.taskCategory === 'OVERDUE'}">{{ task.taskCategory }}</div>
+                        <div ng-class="{ 'text-warning' : task.taskCategory === Category.PENDING,
+                          'text-success' : task.taskCategory === Category.COMPLETED, 'text-danger' : task.taskCategory === Category.OVERDUE}">{{ task.taskCategory }}</div>
                     </div>
                     <div ng-class="{'bg-secondary text-white' : selectedTasksId.indexOf(task.id) !== -1}">
                         <div class="display-4 mb-3">{{ task.title }}</div>

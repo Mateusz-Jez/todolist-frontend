@@ -5,10 +5,10 @@
   <h4 class="text-center mt-4" ng-class="{ 'text-warning' : editCategory === 'PENDING',
                           'text-success' : editCategory === 'COMPLETED',
                            'text-danger' : editCategory === 'OVERDUE'}">{{ editCategory }}</h4>
-  <form ng-submit="checkDate()">
+  <form ng-submit="confirm()">
     <div class="modal-body">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" ng-model="editTitle" ng-minlength="1" required >
+        <input type="text" class="form-control" ng-model="editTitle" ng-minlength="1" required placeholder="Title" >
       </div>
       <div class="input-group mb-3">
         <textarea class="form-control" ng-model="editDescription" ng-minlength="1" required placeholder="Description"></textarea>
@@ -24,8 +24,8 @@
 
     <div class="modal-footer">
       <a class="btn btn-danger" role="button" ng-click="cancel()">CANCEL</a>
-      <button type="button" class="btn btn-success" ng-class="{ 'disabled' : editCategory === 'COMPLETED' }" ng-click="complete()">COMPLETE</button>
-      <button type="submit" class="btn btn-info" ng-click="confirm()">CONFIRM</button>
+      <button type="button" class="btn btn-success" ng-class="{ 'disabled' : editCategory === Category.COMPLETED }" ng-click="complete()">COMPLETE</button>
+      <button type="submit" class="btn btn-info">CONFIRM</button>
     </div>
     <span class="text-danger display-6 mt-3" ng-if="error">{{ error }}</span>
   </form>

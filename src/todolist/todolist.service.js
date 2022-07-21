@@ -1,5 +1,5 @@
 angular.module('ToDoListApp.service', [])
-.factory('todolistAPIservice', function($http) {
+.factory('todolistAPIservice', function($http, Category) {
     var todolistAPI = {};
 
     todolistAPI.getTasks = function (category) {
@@ -21,7 +21,7 @@ angular.module('ToDoListApp.service', [])
                 "title": title,
                 "description": description,
                 "deadline": deadline,
-                "taskCategory": "PENDING"
+                "taskCategory": Category.PENDING
             }
         }).then(function (){
             if(!alert('Successfully added new task!')){
@@ -31,41 +31,48 @@ angular.module('ToDoListApp.service', [])
     }
 
     todolistAPI.deleteTasks = function (tasks) {
-        return $http({
-                    method: 'DELETE',
-                    url: "http://localhost:8080/task",
-                    data : tasks
-                }).then(function (){
+        return $.ajax({
+                type: "DELETE",
+                url: "http://localhost:8080/task",
+                data: JSON.stringify(tasks),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                complete: function () {
                     if(!alert('Selected tasks have been deleted!')){
-                    window.location.reload();
+                        window.location.reload();
                     }
-                });
+                }
+            });
     }
 
     todolistAPI.markTasksAsCompleted = function (tasks) {
-        return $http({
-                    method: 'POST',
-                    url: "http://localhost:8080/task/complete",
-                    data : tasks
-                }).then(function (){
+
+        return $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/task/complete",
+                data: JSON.stringify(tasks),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                complete: function () {
                     window.location.reload();
-                });
+                }
+            });
     }
 
     todolistAPI.editTask = function (id, title, description, category, deadline) {
         return $http({
-                            method: 'PUT',
-                            url: "http://localhost:8080/task/" + id,
-                            data: {
-                                "id" : id,
-                                "title": title,
-                                "description": description,
-                                "deadline": deadline,
-                                "taskCategory": category
-                            }
-                        }).then(function (){
-                            window.location.reload();
-                        });
+                    method: 'PUT',
+                    url: "http://localhost:8080/task/" + id,
+                    data: {
+                        "id" : id,
+                        "title": title,
+                        "description": description,
+                        "deadline": deadline,
+                        "taskCategory": category
+                    }
+                }).then(function (){
+                    window.location.reload();
+                });
     }
 
     return todolistAPI;

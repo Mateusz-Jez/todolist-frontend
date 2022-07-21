@@ -1,5 +1,5 @@
 angular.module('ToDoListApp.controller', [])
-.controller('ToDoListController', function($scope, $routeParams, todolistAPIservice, $uibModal, $log) {
+.controller('ToDoListController', function($scope, $routeParams, todolistAPIservice, $uibModal, $log, Category) {
     $scope.tasks = [];
     $scope.selectedTasksId = [];
     $scope.notCompletedSelected = false;
@@ -27,7 +27,7 @@ angular.module('ToDoListApp.controller', [])
         $scope.notCompletedSelected = false;
         angular.forEach($scope.tasks, function (value, key) {
             if($scope.selectedTasksId.indexOf(value.id) !== -1) {
-                if(value.taskCategory !== 'COMPLETED') {
+                if(value.taskCategory !== Category.COMPLETED) {
                     $scope.notCompletedSelected = true;
                 }
             }
@@ -82,18 +82,19 @@ angular.module('ToDoListApp.controller', [])
         todolistAPIservice.addTask($scope.title, $scope.description, $scope.deadline, $window);
     }
 })
-.controller('ModalInstanceCtrl', function($scope, $uibModalInstance, editTaskData, todolistAPIservice) {
+.controller('ModalInstanceCtrl', function($scope, $uibModalInstance, editTaskData, todolistAPIservice, Category) {
   $scope.editTitle = editTaskData.title;
   $scope.editDescription = editTaskData.description;
   $scope.editCategory = editTaskData.taskCategory;
   $scope.editDeadline = new Date(editTaskData.deadline);
 
   $scope.confirm = function() {
+
     todolistAPIservice.editTask(editTaskData.id, $scope.editTitle, $scope.editDescription, $scope.editCategory, $scope.editDeadline);
   };
 
   $scope.complete = function () {
-    $scope.editCategory = 'COMPLETED';
+    $scope.editCategory = Category.COMPLETED;
   }
 
   $scope.cancel = function() {
